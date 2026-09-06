@@ -1,21 +1,25 @@
-const API_BASE_URL = 'https://campusbridge-backend.onrender.com/api';
+const API_BASE_URL = 'https://campusbridge-backend-0j4w.onrender.com/api';
 
 async function fetchWithAuth(endpoint, options = {}) {
   const token = localStorage.getItem('token');
   const headers = {
     'Content-Type': 'application/json',
-    ...(token && { Authorization: `Bearer ${token}` }),
-    ...options.headers,
+    ...(options.headers || {})
   };
 
-  const response = await fetch(`${API_BASE}${endpoint}`, {
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
-    headers,
+    headers
   });
 
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.error || 'Network request failed');
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.error || 'Something went wrong');
   }
+
   return data;
 }
