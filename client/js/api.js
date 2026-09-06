@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://campusbridge-backend.onrender.com/api';
 
 async function fetchWithAuth(endpoint, options = {}) {
   const token = localStorage.getItem('token');
